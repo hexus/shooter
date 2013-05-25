@@ -1,0 +1,24 @@
+body{background-color:#111;color:#aaa;}
+body,div,input{margin:0;padding:0;}
+#container > *{
+    width:800px;
+    margin:0 auto;
+    display:block;
+}
+#console{
+    left:0;
+    right:0;
+    height:20px;
+}
+#console input{
+    width:100%;
+    border:none;
+}
+#canvas{
+    background-color:#eee;
+    cursor:none;
+}
+.section{
+    width:800px;
+    margin:0 auto;
+}

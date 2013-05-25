@@ -1,0 +1,14 @@
+{
+	"name":"shooter-server",
+	"version":"0.0.5",
+	"author":"Hexus <chris@hex72.com>",
+	"description":"Multiplayer experiment",
+	"main":"index.js",
+	"dependencies":	{
+		"express":"*",
+		"socket.io":"*",
+		"colorize":"*",
+		"amdefine":"*"
+	},
+	"private":true
+}

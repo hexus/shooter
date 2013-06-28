@@ -8,7 +8,7 @@ define(['createjs','shared/Game','shared/Player'],function(createjs,Game,Player)
         this.container = new createjs.Container();
         this.player = args.player || new Player({x:400,y:225});
         this.addEntity(this.player);
-        this.entityDisplayProperties = ['x','y','rotation','alpha'];
+        this.important = ['x','y','rotation','alpha'];
         this.__defineGetter__('stage',function(){
             return this.container.getStage();
         });
@@ -28,11 +28,24 @@ define(['createjs','shared/Game','shared/Player'],function(createjs,Game,Player)
             var entityView = this.entityViews[e];
             var state = entity.state;
             
-            if(!entityView){ // Draw entity
+            // Check for display property changes
+            if(!state.type=='ray'){
+	            for(var d in this.importantDisplay){
+	            	var disp = this.importantDisplay[d];
+	        		if(state[disp]!=entity.lastState[disp]){
+	        			this.container.removeChild(this.entityViews[e]);
+	        			entityView = false;
+	        		}
+	            }
+            }
+            
+            // Draw entity view
+            if(!entityView){
                 var shape = new createjs.Shape();
                 switch(state.type){
                     case "player":
                         shape.graphics.f('#'+state.colour).dc(0,0,state.size);
+                        //shape.cache(-state.size,-state.size,state.size*2,state.size*2); // breaks ray?
                         break;
                     case "ray":
                         shape.graphics.ss(1).s('#'+state.colour).mt(0,0).lt(state.vx,state.vy);
@@ -41,11 +54,13 @@ define(['createjs','shared/Game','shared/Player'],function(createjs,Game,Player)
                 entityView = this.entityViews[entity.id] = this.container.addChild(shape);
             }
             
-            // Update positions
-            for(var p in this.entityDisplayProperties){
-                var property = this.entityDisplayProperties[p];
+            // Update entity view
+            for(var p in this.important){
+                var property = this.important[p];
                 entityView[property] = state[property];
             }
+            
+            entity.lastState = JSON.parse(JSON.stringify(state));
         }
         
         for(var s in this.shapes){
@@ -60,6 +75,8 @@ define(['createjs','shared/Game','shared/Player'],function(createjs,Game,Player)
                 delete(this.shapes[s]);
             }
         }
+        
+        
     }
     
     p.addEntity = function(entity){

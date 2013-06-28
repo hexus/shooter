@@ -2,6 +2,8 @@ var colorize = require('colorize');
 var cconsole = colorize.console;
 var express = require('express');
 var app = express();
+var socket = require('./server/lib/Socket');
+var users = {};
 
 cconsole.log('#cyan[Shooter]');
 
@@ -33,3 +35,5 @@ app.listen(80,function(){
     var Game = require('./server/lib/shared/Game');
     var g = new Game();
 });
+
+socket();

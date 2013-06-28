@@ -3,7 +3,8 @@ requirejs.config({
     paths:{
         'jquery':'jquery-1.8.2',
         'createjs':'createjs-2013.05.14.min',
-        'shared':'/js/shared'
+        'shared':'/js/shared',
+        'socket.io':'//'+window.location.hostname+':7002/socket.io/socket.io'
     },
     shim:{
         'createjs':{
@@ -12,8 +13,8 @@ requirejs.config({
     }
 });
 
-require(['jquery','createjs','lib/Controls','lib/ClientGame','lib/Ui','shared/Player'],
-function($,createjs,Controls,CGame,Ui,Player){
+require(['jquery','createjs','socket.io','lib/Controls','lib/ClientGame','lib/Ui','shared/Player'],
+function($,createjs,sio,Controls,CGame,Ui,Player){
     var init = function(){
         var fps = 40;
         var stage = new createjs.Stage('canvas');

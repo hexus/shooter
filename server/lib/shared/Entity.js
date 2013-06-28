@@ -11,20 +11,21 @@ define(function(){ // Abstract
             x:args.x||0,
             y:args.y||0,
             rotation:0,
-            alpha:1
+            alpha:args.alpha||1
         }
+        this.lastState = {};
     };
     
     var p = Entity.prototype;
 
     /* How to inherit this class:
     var p = SubClass.prototype = new Entity(); // Inheritance
-    p.super_Entity = SubClass.prototype; // Superclass reference
+    p.super_Entity = Entity.prototype; // Superclass reference
     p.constructor = SubClass; // Constructor reassignment
     */
     
     p.tick = function(){
-        // Physics?
+        
     }
     
     p.updateState = function(stateDelta){
